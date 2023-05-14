@@ -1,11 +1,13 @@
 import { authMiddleware } from "@clerk/nextjs";
 
-export default authMiddleware();
+export default authMiddleware({
+  publicRoutes: [
+    "/",
+    "/u(.*)",
+    "/api/clerk_hook"
+  ]
+});
 
 export const config = {
-  // publicRoutes: [
-  //   "/",
-  //   "/u(.*)"
-  // ],
   matcher: ["/((?!.*\\..*|_next).*)", "/"],
 };
