@@ -1,7 +1,6 @@
 import { UserButton, useUser } from '@clerk/clerk-react'
-import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { FaEdit, FaPencilAlt } from 'react-icons/fa';
+import { FaPencilAlt } from 'react-icons/fa';
 
 function Nav() {
   const navigate = useNavigate()
