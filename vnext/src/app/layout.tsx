@@ -1,7 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { ClerkProvider } from '@clerk/nextjs'
-import { Clerk } from '@clerk/nextjs/dist/server'
+import { ClerkProvider, UserButton } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +17,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <div className='flex justify-end p-4'>
+            <UserButton />
+          </div>
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   )
