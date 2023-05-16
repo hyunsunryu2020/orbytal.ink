@@ -1,6 +1,6 @@
 import { HandlerEvent, HandlerContext } from "@netlify/functions";
 import clerk from '@clerk/clerk-sdk-node';
-import { getPageBlocksForUsername } from "./lib/lib";
+import { getPageBlocksForUsername } from "./utils/lib";
 
 
 const handler = async (event: HandlerEvent, context: HandlerContext) => {

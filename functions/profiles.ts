@@ -1,9 +1,9 @@
 import { HandlerEvent, HandlerContext } from "@netlify/functions";
 import { connect } from "@planetscale/database";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
-import { blocks, users } from "./lib/db/schema";
+import { blocks, users } from "./utils/db/schema";
 import { eq } from "drizzle-orm";
-import { createResponse } from "./lib/netlify_helpers";
+import { createResponse } from "./utils/netlify_helpers";
 
 
 const handler = async (event: HandlerEvent, context: HandlerContext) => {
