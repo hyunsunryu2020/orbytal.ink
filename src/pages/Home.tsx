@@ -1,12 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { Profile } from '../models'
+import ProfileSummaryCard from '../components/ProfileSummaryCard'
 
 function Home() {
   const navigate = useNavigate()
+  const [profiles, setProfiles] = useState<any>()
 
   useEffect(() => {
+    // TODO: Loading state
     async function load() {
-      await fetch("/.netlify/functions/profiles")
+      const res = await fetch("/.netlify/functions/profiles")
+      const p = await res.json()
+      setProfiles(p)
     }
     load()
   }, [])
@@ -20,8 +26,8 @@ function Home() {
         <button className="rounded-xl p-3 font-bold bg-slate-800 text-slate-50 hover:shadow-lg hover:bg-slate-700"
           onClick={() => navigate("/profile")}>Create your profile!</button>
       </div>
-      <div className="grid">
-        <div>new user cards here</div>
+      <div className="px-4 md:px-20 grid md:grid-cols-3">
+        {profiles.map((p: Profile) => <ProfileSummaryCard key={`profile-${p.username}`} profile={p} />)}
       </div>
     </div>
   )

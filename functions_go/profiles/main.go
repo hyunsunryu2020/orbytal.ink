@@ -26,8 +26,6 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 		}
 	}
 
-	log.Println(token)
-
 	if token == "" {
 		// TODO: return unauth
 	}
@@ -48,17 +46,12 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println(user)
 	jbytes, err := json.Marshal(user)
 	if err != nil {
 		log.Fatal(err)
 	}
+	// THIS PRINTS THE USER
 	log.Println(string(jbytes))
-
-	// fmt.Println("\nSessions:")
-	// for i, session := range sessions {
-	// 	fmt.Printf("%v. %v (%v)\n", i+1, session.ID, session.Status)
-	// }
 
 	return &events.APIGatewayProxyResponse{
 		StatusCode: 200,

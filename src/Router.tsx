@@ -2,11 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
-import UserProfile from './pages/UserProfile'
 import Layout from './Layout'
-import { RedirectToSignIn, RedirectToSignUp, SignedIn, SignedOut } from '@clerk/clerk-react'
-
-
+import { RedirectToSignIn, RedirectToSignUp } from '@clerk/clerk-react'
 
 function Router() {
   return (
@@ -14,7 +11,7 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={
+          {/* <Route path="/profile" element={
             <>
               <SignedIn>
                 <Profile />
@@ -23,8 +20,8 @@ function Router() {
                 <RedirectToSignIn />
               </SignedOut>
             </>
-          } />
-          <Route path="/u/:username" element={<UserProfile />} />
+          } /> */}
+          <Route path="/u/:username" element={<Profile />} />
           
           {/* Sign in/up */}
           <Route path="/sign-in" element={<RedirectToSignIn />} />
