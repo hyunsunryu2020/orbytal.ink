@@ -4,12 +4,14 @@ import { drizzle } from "drizzle-orm/planetscale-serverless";
 import { blocks, users } from "./utils/db/schema";
 import { eq } from "drizzle-orm";
 import { createResponse } from "./utils/netlify_helpers";
+import fetch from 'node-fetch'
 
 
 const handler = async (event: HandlerEvent, context: HandlerContext) => {
   const { username } = event.queryStringParameters as any
   const config = {
-    url: process.env.DATABASE_URL
+    url: process.env.DATABASE_URL,
+    fetch
   }
   
   const conn = connect(config)
