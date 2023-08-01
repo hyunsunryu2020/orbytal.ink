@@ -1,6 +1,6 @@
 import { HandlerEvent, HandlerContext } from "@netlify/functions";
 import clerk from '@clerk/clerk-sdk-node';
-import { getPageBlocksForUsername } from "./utils/lib";
+import { getPageBlocksForUsername, getUserWithBlocksForUsername, updateProfile } from "./utils/lib";
 
 
 const handler = async (event: HandlerEvent, context: HandlerContext) => {
@@ -38,20 +38,37 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
     }
   }
 
-  const page_blocks = await getPageBlocksForUsername(user.username)
-
-  const res = {
-    user: {
-      username: user.username,
-      name: user.firstName + " " + user.lastName
-    },
-    page_blocks
+  if(event.httpMethod === "GET") {
+    const userAndBlocks = await getUserWithBlocksForUsername(user.username)
+  
+    const res = {
+      user: {
+        username: user.username,
+        name: user.firstName + " " + user.lastName,
+        tagline: userAndBlocks.tagline
+      },
+      blocks: userAndBlocks.blocks
+    }
+  
+    return {
+      statusCode: 200,
+      body: JSON.stringify(res)
+    }
   }
 
-  // your server-side functionality
-  return {
-    statusCode: 200,
-    body: JSON.stringify(res)
+  if(event.httpMethod === "POST") {
+    if(!event.body) {
+      return {
+        statusCode: 400
+      }
+    }
+    
+    const body = JSON.parse(event.body)
+    await updateProfile(user.username, body.tagline)
+
+    return {
+      statusCode: 200
+    }
   }
 };
 

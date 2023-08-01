@@ -1,11 +1,20 @@
+import { relations } from "drizzle-orm";
 import { mysqlTable, serial, varchar, int } from "drizzle-orm/mysql-core";
 
 export const blocks = mysqlTable('blocks', {
   id: serial('id').primaryKey(),
   url: varchar('url', { length: 200 }),
   block_type: int('type'),
-  user_id: int('user_id')
+  user_id: int('user_id').references(() => users.id),
+  label: varchar('label', { length: 200 })
 });
+
+export const blocksRelations = relations(blocks, ({ one }) => ({
+  user: one(users, {
+    fields: [blocks.user_id],
+    references: [users.id]
+  })
+}))
 
 export const sections = mysqlTable('sections', {
   id: serial('id').primaryKey(),
