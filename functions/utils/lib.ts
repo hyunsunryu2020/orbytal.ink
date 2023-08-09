@@ -1,9 +1,18 @@
 import { connect } from '@planetscale/database'
 import { eq } from 'drizzle-orm'
-import { drizzle } from 'drizzle-orm/planetscale-serverless'
+import { PlanetScaleDatabase, drizzle } from 'drizzle-orm/planetscale-serverless'
 import { blocks, users } from './db/schema'
 import * as schema from './db/schema'
 import fetch from 'node-fetch'
+
+export function getDb(): PlanetScaleDatabase<typeof schema> {
+  const config = {
+    url: process.env.DATABASE_URL
+  }
+  
+  const conn = connect(config)
+  return drizzle(conn, { schema })
+}
 
 export async function getPageBlocksForUserId(id: number) {
   const config = {
