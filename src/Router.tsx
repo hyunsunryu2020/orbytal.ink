@@ -3,7 +3,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
 import Layout from './Layout'
-import { RedirectToSignIn, RedirectToSignUp } from '@clerk/clerk-react'
+import { RedirectToSignIn, RedirectToSignUp, SignedIn, SignedOut } from '@clerk/clerk-react'
 
 function Router() {
   return (
@@ -11,7 +11,7 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/profile" element={
+          <Route path="/profile" element={
             <>
               <SignedIn>
                 <Profile />
@@ -20,7 +20,7 @@ function Router() {
                 <RedirectToSignIn />
               </SignedOut>
             </>
-          } /> */}
+          } />
           <Route path="/u/:username" element={<Profile />} />
           
           {/* Sign in/up */}
