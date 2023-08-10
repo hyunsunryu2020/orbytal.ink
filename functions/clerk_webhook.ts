@@ -1,6 +1,6 @@
 import { HandlerEvent, HandlerContext } from "@netlify/functions";
 import { getDb } from "./utils/lib";
-import { users } from "./utils/db/schema";
+import { blocks, users } from "./utils/db/schema";
 import { eq } from "drizzle-orm";
 
 type ClerkWebhook = {
@@ -36,7 +36,15 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
       }
   
       if(webhook.type === "user.deleted") {
-        // TODO: handle me
+        const dbuser = await db.query.users.findFirst({
+          where: eq(users.username, webhook.data.username)
+        })
+        if(dbuser) {
+          await Promise.all([
+            db.delete(users).where(eq(users.id, dbuser.id)),
+            db.delete(blocks).where(eq(blocks.user_id, dbuser.id))
+          ])
+        }
       }
       
       return {
