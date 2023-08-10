@@ -23,7 +23,19 @@ function Block({ type, url }: Params) {
     if(type === BlockTypeEnum.Threads) {
       theUrl = `https://threads.net/@${url}`
     }
+    if(type === BlockTypeEnum.Facebook) {
+      theUrl = `https://facebook.com/${url}`
+    }
+    if(type === BlockTypeEnum.Instagram) {
+      theUrl = `https://instagram.com/${url}`
+    }
+    if(type === BlockTypeEnum.Twitch) {
+      theUrl = `https://twitch.tv/@${url}`
+    }
     if(type === BlockTypeEnum.Discord) {
+      theUrl = url
+    }
+    if(type === BlockTypeEnum.Custom) {
       theUrl = url
     }
     window.open(theUrl, '_blank')
