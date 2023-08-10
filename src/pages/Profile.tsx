@@ -1,12 +1,16 @@
+import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react"
-import { FaTwitter } from "react-icons/fa";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useEditProfileStore } from "../store";
+import Block from "../components/Block";
 
 export interface Profile {
   id: number
   username: string
   display_name: string
   tagline: string
+  img_url: string
   blocks: Block[]
 }
 
@@ -17,7 +21,6 @@ export interface Block {
   user_id: number
 }
 
-
 function Profile() {
   const [profile, setProfile] = useState<Profile>()
   const { username } = useParams();
@@ -27,26 +30,31 @@ function Profile() {
     async function load() {
       const res = await fetch(`/.netlify/functions/profiles?username=${username}`)
       const json = await res.json()
-      console.log(json)
       setProfile(json)
     }
     load()
   }, [username])
 
   return (
-    <div className="px-20">
+    <div className="px-8 md:px-20 max-w-[1200px]">
       {profile && (
         <div>
-          <div>
-            <div>{ profile.display_name }</div>
-            <div>{ profile.tagline } </div>
-            <div>@{profile.username}</div>
+          <div className="mb-8">
+            <div className="mb-4">
+              {profile.img_url && (
+                <div className="flex justify-center md:justify-start">
+                  <img src={profile.img_url} className="max-h-[125px] max-w-[125px] rounded-full shadow-sm mb-2 border-2 border-slate-300" />
+                </div>
+              )}
+              <h1>{ profile.display_name }</h1> 
+              {/* TODO: copy profile url on click */}
+              <span className="text-gray-700 italic">@{ profile.username }</span>
+            </div>
+            <div className="font-semibold text-lg">{ profile.tagline }</div>
           </div>
-          <div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
             {profile.blocks.map(b => (
-              <button onClick={() => window.open(`https://twitter.com/${b.url}`, '_blank')} className="text-left p-4 bg-slate-200 hover:bg-[#1D9BF0] transition-all rounded-lg flex items-center gap-1">
-                <FaTwitter /> @{b.url}
-              </button>
+              <Block key={`block-${b.id}`} type={b.block_type} url={b.url} />
             ))}
           </div>
         </div>

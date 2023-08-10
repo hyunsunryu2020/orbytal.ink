@@ -27,25 +27,37 @@ func handler(ctx context.Context, request events.APIGatewayProxyRequest) (*event
 	}
 
 	if token == "" {
-		// TODO: return unauth
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 401,
+		}, nil
 	}
 
 	apiKey := os.Getenv("CLERK_API_KEY")
 
 	client, err := clerk.NewClient(apiKey)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 500,
+		}, nil
 	}
 
 	claims, err := client.VerifyToken(token)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 500,
+		}, nil
 	}
 
 	user, err := client.Users().Read(claims.Subject)
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return &events.APIGatewayProxyResponse{
+			StatusCode: 500,
+		}, nil
 	}
+
 	jbytes, err := json.Marshal(user)
 	if err != nil {
 		log.Fatal(err)

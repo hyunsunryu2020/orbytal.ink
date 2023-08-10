@@ -5,36 +5,21 @@ import { blocks, users } from "./utils/db/schema";
 import { eq } from "drizzle-orm";
 import { createResponse } from "./utils/netlify_helpers";
 import fetch from 'node-fetch'
+import { getDb } from "./utils/lib";
 
 
 const handler = async (event: HandlerEvent, context: HandlerContext) => {
   const { username } = event.queryStringParameters as any
-  const config = {
-    url: process.env.DATABASE_URL,
-    fetch
-  }
-  
-  const conn = connect(config)
-  const db = drizzle(conn)
+  const db = getDb();
 
   if(username) {
-    const user_rows = await db.select().from(users).where(eq(users.username, username)).limit(1)
-    if(user_rows.length == 0) {
-      return {
-        statusCode: 404
+    const user = await db.query.users.findFirst({
+      where: eq(users.username, username),
+      with: {
+        blocks: true,
       }
-    }
-    const user = user_rows[0]
-  
-    const page_blocks = await db.select().from(blocks).where(eq(blocks.user_id, user.id))
-    
-    return createResponse(200, {
-      id: user.id,
-      username,
-      display_name: user.display_name,
-      tagline: user.tagline,
-      blocks: page_blocks
     })
+    return createResponse(200, user)
   } else {
     const user_rows = await db.select().from(users).limit(30)
 

@@ -9,6 +9,10 @@ export const users = mysqlTable('users', {
   img_url: varchar('img_url', { length: 500 }),
 })
 
+export const usersRelations = relations(users, ({ many }) => ({
+  blocks: many(blocks)
+}));
+
 export const blocks = mysqlTable('blocks', {
   id: serial('id').primaryKey(),
   url: varchar('url', { length: 200 }),
