@@ -4,6 +4,8 @@ import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
 import Layout from './Layout'
 import { RedirectToSignIn, RedirectToSignUp, SignedIn, SignedOut } from '@clerk/clerk-react'
+import Me from './pages/Me'
+import New from './pages/New'
 
 function Router() {
   return (
@@ -11,10 +13,10 @@ function Router() {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={
+          <Route path="/me" element={
             <>
               <SignedIn>
-                <Profile />
+                <Me />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />
@@ -22,10 +24,11 @@ function Router() {
             </>
           } />
           <Route path="/u/:username" element={<Profile />} />
+          <Route path="/new" element={<New />} />
           
           {/* Sign in/up */}
-          <Route path="/sign-in" element={<RedirectToSignIn />} />
-          <Route path="/sign-up" element={<RedirectToSignUp />} />
+          <Route path="/sign-in" element={<RedirectToSignIn redirectUrl="/" />} />
+          <Route path="/sign-up" element={<RedirectToSignUp redirectUrl="/new" />} />
 
           {/* 404s */}
           <Route path="*" element={<NotFound />} />

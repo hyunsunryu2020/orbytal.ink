@@ -39,6 +39,7 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
         const dbuser = await db.query.users.findFirst({
           where: eq(users.username, webhook.data.username)
         })
+        console.log('dbuser', dbuser)
         if(dbuser) {
           await Promise.all([
             db.delete(users).where(eq(users.id, dbuser.id)),
