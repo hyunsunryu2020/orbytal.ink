@@ -1,4 +1,3 @@
-import { FaTwitter } from "react-icons/fa"
 import BlockTypeEnum from "../models/BlockTypeEnum"
 import { BlockType, blockTypes } from "./EditBlock"
 import { useEffect, useState } from "react"

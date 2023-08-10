@@ -1,8 +1,5 @@
-import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useEditProfileStore } from "../store";
 import Block from "../components/Block";
 
 export interface Profile {

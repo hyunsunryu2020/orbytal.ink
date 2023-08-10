@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { FaDiscord, FaFacebook, FaInstagram, FaQuestionCircle, FaSortDown, FaTwitch, FaTwitter, FaYarn } from 'react-icons/fa'
 import BlockTypeEnum from '../models/BlockTypeEnum'
 

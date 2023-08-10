@@ -1,7 +1,7 @@
 import { UserButton, useUser } from '@clerk/clerk-react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-import { useEditProfileStore, useEditModalStore, useProfileStore } from '../store';
+import { useEditModalStore, useProfileStore } from '../store';
 import { useEffect } from 'react';
 
 function Nav() {
