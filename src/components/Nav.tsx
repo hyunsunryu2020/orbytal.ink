@@ -1,6 +1,6 @@
 import { UserButton, useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaHome, FaPencilAlt } from 'react-icons/fa';
 import { useEditModalStore, useProfileStore } from '../store';
 import { useEffect } from 'react';
 
@@ -27,19 +27,23 @@ function Nav() {
   }
 
   return (
-    <div className='flex justify-end p-4 gap-2'>
-      { isLoaded && (
-        <>
-          {isSignedIn ?
-            <button className="px-2 hover:bg-slate-300 hover:shadow-sm transition-all rounded-xl"
-              onClick={() => onEditClicked()}><FaPencilAlt /></button>
-            :
-            <button className="py-2 px-3 hover:bg-slate-300 hover:text-slate-900 hover:shadow-sm transition-all rounded-xl"
-              onClick={() => navigate("/sign-in")}>Sign in</button>
-          }
-        </>
-      )}
-      <UserButton />
+    <div className='flex justify-between p-4 gap-2'>
+      <button className="px-2 hover:bg-slate-300 hover:shadow-sm transition-all rounded-xl"
+        onClick={() => navigate("/")}><FaHome className="text-lg" /></button>
+      <div className="flex gap-2 items-center">
+        { isLoaded && (
+          <>
+            {isSignedIn ?
+              <button className="px-2 hover:bg-slate-300 hover:shadow-sm transition-all rounded-xl"
+                onClick={() => onEditClicked()}><FaPencilAlt /></button>
+              :
+              <button className="py-2 px-3 hover:bg-slate-300 hover:text-slate-900 hover:shadow-sm transition-all rounded-xl"
+                onClick={() => navigate("/sign-in")}>Sign in</button>
+            }
+          </>
+        )}
+        <UserButton />
+      </div>
     </div>
   )
 }
