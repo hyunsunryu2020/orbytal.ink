@@ -7,6 +7,7 @@ import fetch from 'node-fetch'
 
 export function getDb(): PlanetScaleDatabase<typeof schema> {
   const config = {
+    fetch,
     url: process.env.DATABASE_URL
   }
   
