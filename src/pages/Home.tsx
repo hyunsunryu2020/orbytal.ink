@@ -11,8 +11,10 @@ function Home() {
     // TODO: Loading state
     async function load() {
       const res = await fetch("/.netlify/functions/profiles")
-      const p = await res.json()
-      setProfiles(p)
+      if(res.status === 200) {
+        const p = await res.json()
+        setProfiles(p)
+      }
     }
     load()
   }, [])
@@ -27,7 +29,7 @@ function Home() {
           onClick={() => navigate("/profile")}>Create your profile!</button>
       </div>
       <div className="px-4 md:px-20 grid md:grid-cols-3">
-        {profiles.map((p: Profile) => <ProfileSummaryCard key={`profile-${p.username}`} profile={p} />)}
+        {profiles.length > 0 && profiles.map((p: Profile) => <ProfileSummaryCard key={`profile-${p.username}`} profile={p} />)}
       </div>
     </div>
   )
