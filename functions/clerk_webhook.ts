@@ -36,7 +36,7 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
       }
   
       if(webhook.type === "user.deleted") {
-        // handle me
+        // TODO: handle me
       }
       
       return {
