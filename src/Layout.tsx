@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 import Nav from './components/Nav'
-import { useEditModalStore } from './store'
 import EditProfileModal from './components/EditProfileModal'
 
 type Props = {
