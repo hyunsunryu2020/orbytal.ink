@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { FaPlus, FaTimes } from 'react-icons/fa'
-import { useEditModalStore, useProfileStore } from '../store'
+import { useProfileStore } from '../store'
 import { useEffect, useState } from 'react'
 import EditBlock from './EditBlock'
 import BlockTypeEnum from '../models/BlockTypeEnum'
@@ -16,13 +16,13 @@ function EditProfileForm({ onBackgroundClicked, hideCloseButton, onCloseClicked 
   const [tagline, setTagline] = useState<string>()
   // TODO: dont use any
   const [blocks, setBlocks] = useState<any[]>([])
-  
+
   useEffect(() => {
     if(!isLoaded) false
     setTagline(profile.tagline)
     setBlocks(profile.blocks)
   }, [isLoaded, profile])
-  
+
   async function onSubmit() {
     const res = await fetch("/.netlify/functions/me", {
       method: "post",

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Block from "../components/Block";
 
 export interface Profile {
@@ -44,7 +44,7 @@ function Me() {
                   <img src={profile.img_url} className="max-h-[125px] max-w-[125px] rounded-full shadow-sm mb-2 border-2 border-slate-300" />
                 </div>
               )}
-              <h1>{ profile.display_name }</h1> 
+              <h1>{ profile.display_name }</h1>
               {/* TODO: copy profile url on click */}
               <span className="text-gray-700 italic">@{ profile.username }</span>
             </div>

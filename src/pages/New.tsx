@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
-import { useEditModalStore } from "../store";
 import EditProfileForm from "../components/EditProfileForm";
 
-function Me() {
+function New() {
   return (
     <EditProfileForm />
   )
 }
 
-export default Me
+export default New
