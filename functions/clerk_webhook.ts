@@ -1,7 +1,7 @@
 // functions/clerk_webhook.ts
 import { HandlerEvent, HandlerContext } from '@netlify/functions'
 import { getDb } from './utils/lib'
-import { blocks, users } from './utils/db/schema'
+import { users } from './utils/db/schema'
 import { eq } from 'drizzle-orm'
 // This type describes the structure of the incoming webhook
 type ClerkWebhook = {
@@ -20,15 +20,15 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
       // 👉 `webhook.type` is a string value that describes what kind of event we need to handle
 
       // 👉 If the type is "user.updated" the important values in the database will be updated in the users table
-      if (webhook.type === 'user.updated') {
-        await db
-          .update(users)
-          .set({
-            display_name: `${webhook.data.first_name} ${webhook.data.last_name}`,
-            img_url: webhook.data.image_url
-          })
-          .where(eq(users.username, webhook.data.username))
-      }
+      // if (webhook.type === 'user.updated') {
+      //   await db
+      //     .update(users)
+      //     .set({
+      //       display_name: `${webhook.data.first_name} ${webhook.data.last_name}`,
+      //       img_url: webhook.data.image_url
+      //     })
+      //     .where(eq(users.email, webhook.data.email))
+      // }
 
       // 👉 If the type is "user.created" create a record in the users table
       if (webhook.type === 'user.created') {
@@ -48,8 +48,8 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
         console.log('dbuser', dbuser)
         if (dbuser) {
           await Promise.all([
-            db.delete(users).where(eq(users.id, dbuser.id)),
-            db.delete(blocks).where(eq(blocks.user_id, dbuser.id))
+            db.delete(users).where(eq(users.user_id, dbuser.user_id)),
+            db.delete(blocks).where(eq(blocks.user_id, dbuser.user_id))
           ])
         }
       }
