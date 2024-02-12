@@ -6,10 +6,8 @@ import { eq } from 'drizzle-orm'
 // This type describes the structure of the incoming webhook
 type ClerkWebhook = {
   data: {
-    first_name: string
-    last_name: string
-    image_url: string
-    username: string
+      email:string
+      password_hash:string
   }
   type: string
 }
@@ -38,7 +36,7 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
           email: webhook.data.email,
           password_hash: webhook.data.password_hash,
           created_at: new Date(), // Assuming you want to set the current timestamp
-          username: webhook.data.username
+      
         })
       }
 
