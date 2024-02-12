@@ -35,8 +35,9 @@ const handler = async (event: HandlerEvent, context: HandlerContext) => {
       // 👉 If the type is "user.created" create a record in the users table
       if (webhook.type === 'user.created') {
         await db.insert(users).values({
-          display_name: `${webhook.data.first_name} ${webhook.data.last_name}`,
-          img_url: webhook.data.image_url,
+          email: webhook.data.email,
+          password_hash: webhook.data.password_hash,
+          created_at: new Date(), // Assuming you want to set the current timestamp
           username: webhook.data.username
         })
       }
